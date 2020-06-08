@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import api from '../../api/index';
 import CustomSearchInput from '../../components/SearchInput/index';
 import HappyIcon from '../../assets/icons/happy.svg';
 
 function Home() {
+  const [githubUser, setGithubUser] = useState(null);
+
+  async function getGithubUserByUsername (username) {
+    try {
+      const response = await api.get('/users/natanfernandes');
+      console.log(response)
+      setGithubUser(response);
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm" style={styles.containerStyle}>
 
-        <CustomSearchInput placeholder="Digite um usuário para procurar" />
+        <CustomSearchInput placeholder="Digite um usuário para procurar" submitFunction={getGithubUserByUsername} />
 
         <div style={styles.explainContainerStyle}>
           <Grid item xs={12} style={styles.containerGridStyle}>

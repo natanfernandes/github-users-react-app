@@ -27,13 +27,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomSearchInput({ placeholder }) {
+export default function CustomSearchInput({ placeholder, submitFunction }) {
   const [usernameTextInput, setUsernameTextInput] = useState(null);
 
   const classes = useStyles();
 
   function handleSubmit(event) {
-    alert('Um nome foi enviado: ' + usernameTextInput);
+    if(usernameTextInput !== null){
+      submitFunction(usernameTextInput)
+      alert('Um nome foi enviado: ' + usernameTextInput);
+    }
     event.preventDefault();
   }
 
