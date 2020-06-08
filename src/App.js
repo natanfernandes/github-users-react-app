@@ -1,9 +1,13 @@
 import React from 'react';
-import AppRoutes from './routes/index'; 
+import ButtonAppBar from './components/AppBar/index';
+import AppRoutes from './routes/index';
 
 function App() {
   return (
-   <AppRoutes />
+    <div>
+      <ButtonAppBar />
+      <AppRoutes />
+    </div>
   );
 }
 

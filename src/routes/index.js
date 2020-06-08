@@ -4,8 +4,8 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import Home from '../screens/Home';
-import User from '../screens/User';
+import Home from '../pages/Home';
+import User from '../pages/User';
 
 export default function AppRoutes() {
     return (
