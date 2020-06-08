@@ -7,6 +7,7 @@ import {
 import Home from '../pages/Home';
 import User from '../pages/User';
 
+// traz o redirecionamento dinâmico de acordo com o path da aplicação
 export default function AppRoutes() {
     return (
         <Router>

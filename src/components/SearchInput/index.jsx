@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -28,14 +29,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomSearchInput({ placeholder, submitFunction }) {
+  /**
+   * estado para controlar o valor digitado no input
+   */
+
   const [usernameTextInput, setUsernameTextInput] = useState(null);
 
   const classes = useStyles();
 
+  /**
+   * método captura o evento de submit do input e chama o método de GET da api do github.
+   * @param {HTMLFormElement} event - evento capturado do submit do form.
+   */
   function handleSubmit(event) {
-    if(usernameTextInput !== null){
-      submitFunction(usernameTextInput)
-      alert('Um nome foi enviado: ' + usernameTextInput);
+    if (usernameTextInput !== null) {
+      // método passado por props que realiza o GET na api do github
+      submitFunction(usernameTextInput);
+      alert(`Um nome foi enviado: ${usernameTextInput}`);
     }
     event.preventDefault();
   }
@@ -47,11 +57,20 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
       <InputBase
         className={classes.input}
         placeholder={placeholder}
-        onChange={text => setUsernameTextInput(text.target.value)}
+        onChange={(text) => setUsernameTextInput(text.target.value)}
       />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+      <IconButton
+        type="submit"
+        className={classes.iconButton}
+        aria-label="search"
+      >
         <SearchIcon />
       </IconButton>
     </Paper>
   );
 }
+
+CustomSearchInput.propTypes = {
+  placeholder: PropTypes.string.isRequired,
+  submitFunction: PropTypes.func.isRequired,
+};
