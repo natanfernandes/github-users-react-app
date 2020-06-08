@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,11 +26,8 @@ export default function ButtonAppBar() {
       <AppBar position="static" style={{backgroundColor:'orange'}}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <HomeIcon />
+            <GitHubIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            GitHub Users
-          </Typography>
         </Toolbar>
       </AppBar>
     </div>
