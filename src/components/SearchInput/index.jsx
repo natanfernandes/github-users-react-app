@@ -8,6 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 
+/**
+ * estilos usados no input utilizando o makeStyles do Material
+ */
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
@@ -45,7 +48,6 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
     if (usernameTextInput !== null) {
       // método passado por props que realiza o GET na api do github
       submitFunction(usernameTextInput);
-      alert(`Um nome foi enviado: ${usernameTextInput}`);
     }
     event.preventDefault();
   }
@@ -70,6 +72,9 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
   );
 }
 
+/**
+ * validação das props recebidas do componente Home
+ */
 CustomSearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   submitFunction: PropTypes.func.isRequired,
