@@ -9,7 +9,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import * as userNullCheck from '../../utils/userNullCheck';
+import * as utils from '../../utils';
+
 /**
  * estilos usados no card utilizando o makeStyles do Material
  */
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
 });
+
 export default function UserCardImage({ userData }) {
   /**
    * estado que controla os dados do user recebidos via props
@@ -43,15 +45,15 @@ export default function UserCardImage({ userData }) {
           component="img"
           alt="Contemplative Reptile"
           height="140"
-          image={userNullCheck.returnUserImageIfUserIsValid(user)}
-          title={userNullCheck.returnUserNameIfUserIsValid(user)}
+          image={utils.hasValidProperty(user, 'avatar_url')}
+          title={utils.hasValidProperty(user, 'name')}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {userNullCheck.returnUserNameIfUserIsValid(user)}
+            {utils.hasValidProperty(user, 'name')}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {userNullCheck.returnUserBioIfUserIsValid(user)}
+            {utils.hasValidProperty(user, 'bio')}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -59,7 +61,7 @@ export default function UserCardImage({ userData }) {
         <Button
           size="small"
           component={Link}
-          to={`/user/${userNullCheck.returnUserLoginIfUserIsValid(user)}`}
+          to={`/user/${utils.hasValidProperty(user, 'login')}`}
           color="primary"
         >
           Ver perfil

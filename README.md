@@ -4,12 +4,12 @@ Projeto criado com template padrão do React.
 
 ### `npm start`
 
-Roda a aplicação em modo de desenvolvimento.<br />
+Roda a aplicação em modo de desenvolvimento, mas ainda é necessário um 'npm install' antes de ser executada pela primeira vez.<br />
 Abra [http://localhost:3000](http://localhost:3000) no browser.
 
 ### `npm run build`
 
-Builda o app para produção.<br />
+Builda o app para deploy.<br />
 
 ## Rotas
 
@@ -17,9 +17,14 @@ Builda o app para produção.<br />
 
 Tela inicial com um text field para busca de algum user no GitHub.
 
-### User ( host/user/:id )
+### Search ( host/search/:username )
 
-Tela mostrada após digitado um nome de usuário correto, contendo algumas infos sobre, e caso o usuário n seja encontrado, é mostrada uma tela de error (not found).
+Tela mostrada após digitado um nome de usuário correto ou incorreto, com um card se o user for acahado ou uma mensagem de erro caso não seja achado, ao clicar no card é redirecionado para a próxima rota
+
+
+### User ( host/user/:username )
+
+Tela mostrada após clicado no card do usuário, contendo algumas infos sobre(seguidores, seguindo, data de entrada, gists, repos mais famosos) e um botão para visualizar todos os repositórios.
 
 ## Telas e Componentes
 <p>Na maioria das telas e alguns componentes customs utilizei dos componentes providos pelo <a href="https://material-ui.com/pt/"> Material UI </a> do Google, como grids para responsividade, botões, cores , dentre outros, pois ela é uma lib muito conceituada no React.

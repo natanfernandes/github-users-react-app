@@ -95,10 +95,13 @@ function Search({ match }) {
    */
   function renderContentIfUserFound() {
     if (githubUserFound && githubUser !== null) {
+      /**
+       * userDataTemp é um obj para passar apenas as infos necessárias para o card
+       */
       const userDataTemp = {
         name: githubUser.name,
         bio: githubUser.bio,
-        avatar: githubUser.avatar_url,
+        avatar_url: githubUser.avatar_url,
         login: githubUser.login,
       };
       return (

@@ -4,18 +4,18 @@ import Home from '../pages/Home';
 import User from '../pages/User';
 import Search from '../pages/Search';
 
-// traz o redirecionamento dinâmico de acordo com o path da aplicação
+// traz o redirecionamento dinâmico de rotas de acordo com o path da aplicação
 export default function AppRoutes() {
   return (
     <Router>
       <Switch>
-        <Route path="/search/:username">
+        <Route exact path="/search/:username">
           <Search />
         </Route>
-        <Route path="/user/:username">
+        <Route exact path="/user/:username">
           <User />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Home />
         </Route>
       </Switch>
