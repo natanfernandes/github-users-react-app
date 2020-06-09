@@ -9,7 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-
+import * as userNullCheck from '../../utils/userNullCheck';
 /**
  * estilos usados no card utilizando o makeStyles do Material
  */
@@ -18,7 +18,6 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
 });
-
 export default function UserCardImage({ userData }) {
   /**
    * estado que controla os dados do user recebidos via props
@@ -35,46 +34,6 @@ export default function UserCardImage({ userData }) {
   }, [userData]);
 
   /**
-   * método que retorna o avatar se o user for válido
-   */
-  function returnUserImage() {
-    if (user) {
-      return user.avatar;
-    }
-    return null;
-  }
-
-  /**
-   * método que retorna o nome se o user for válido
-   */
-  function returnUserName() {
-    if (user) {
-      return user.name;
-    }
-    return null;
-  }
-
-  /**
-   * método que retorna a bio se o user for válido
-   */
-  function returnUserBio() {
-    if (user) {
-      return user.bio;
-    }
-    return null;
-  }
-
-  /**
-   * método que retorna o login ou username se o user for válido
-   */
-  function returnUserLogin() {
-    if (user) {
-      return user.login;
-    }
-    return null;
-  }
-
-  /**
    * principal componente a ser renderizado (UserCardImage)
    */
   return (
@@ -84,15 +43,15 @@ export default function UserCardImage({ userData }) {
           component="img"
           alt="Contemplative Reptile"
           height="140"
-          image={returnUserImage()}
-          title={returnUserName()}
+          image={userNullCheck.returnUserImageIfUserIsValid(user)}
+          title={userNullCheck.returnUserNameIfUserIsValid(user)}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {returnUserName()}
+            {userNullCheck.returnUserNameIfUserIsValid(user)}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {returnUserBio()}
+            {userNullCheck.returnUserBioIfUserIsValid(user)}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -100,7 +59,7 @@ export default function UserCardImage({ userData }) {
         <Button
           size="small"
           component={Link}
-          to={`/user/${returnUserLogin()}`}
+          to={`/user/${userNullCheck.returnUserLoginIfUserIsValid(user)}`}
           color="primary"
         >
           Ver perfil

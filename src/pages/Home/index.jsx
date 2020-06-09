@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import api from '../../api/index';
+import { Redirect } from 'react-router-dom';
 import CustomSearchInput from '../../components/SearchInput/index';
-import UserCardImage from '../../components/UserCard/index';
 import SearchPeopleIcon from '../../assets/icons/search.svg';
 
 function Home() {
@@ -12,75 +11,59 @@ function Home() {
    * estado que salva o retorno da requisição de GET do usuario, caso status 200
    */
   const [githubUser, setGithubUser] = useState(null);
-
   /**
-   * estado que salva se o usuário foi encontrado ou não
+   * estado que controla se o redirecionamento deve ser feito
    * @type {boolean}
    */
-  const [githubUserFound, setGithubUserFound] = useState(false);
+  const [redirectToSearchPage, setRedirectToSearchPage] = useState(false);
 
   /**
-   * método que faz a requisição a API do github e atribui caso sucesso a resposta no estado .
+   * componente que faz o redirect caso haja o submit do user
+   * @type {boolean}
+   */
+  function redirectToSearchPageIfHadUser() {
+    if (redirectToSearchPage && githubUser) {
+      return <Redirect to={`/search/${githubUser}`} />;
+    }
+    return null;
+  }
+
+  /**
+   * método que verifica o nome e faz o redirecionamento para a pagina de busca
    * @param {string} username - nome do usuário a ser procurado, passado do input.
    */
-  async function getGithubUserByUsername(username) {
-    try {
-      const response = await api.get(`/users/${username}`);
-      setGithubUserFound(true);
-      setGithubUser(response.data);
-    } catch (error) {
-      setGithubUserFound(false);
+  function getGithubUserByUsername(username) {
+    if (username && username !== '') {
+      setRedirectToSearchPage(true);
+      setGithubUser(username);
     }
   }
-
-  /**
-   * função que controla a renderização de acordo com estado, verificando se o usuário foi
-   * encontrado ou não, caso sim retorna o card com dados, caso não volta para tela inicial
-   */
-  function renderContentIfUserFound() {
-    if (githubUserFound && githubUser !== null) {
-      const userDataTemp = {
-        name: githubUser.name,
-        bio: githubUser.bio,
-        avatar: githubUser.avatar_url,
-        login: githubUser.login,
-      };
-      return (
-        <Grid container xs={12} style={styles.containerGridStyle}>
-          <UserCardImage userData={userDataTemp} />
-        </Grid>
-      );
-    }
-    return (
-      <div style={styles.explainContainerStyle}>
-        <Grid item xs={12} style={styles.containerGridStyle}>
-          Essa é uma aplicação que consome a API do GitHub e mostra dados sobre
-          o usuário e seus repositórios, para saber mais sobre algum usuário
-          basta digitar seu username.
-        </Grid>
-        <Grid item xs={12} style={styles.containerGridStyle}>
-          <img
-            src={SearchPeopleIcon}
-            alt="happy icon"
-            style={styles.searchPeopleStyle}
-          />
-        </Grid>
-      </div>
-    );
-  }
-
   /**
    * principal componente a ser renderizado (Home)
    */
   return (
     <>
+      {redirectToSearchPageIfHadUser()}
       <CssBaseline />
       <Container maxWidth="sm" style={styles.containerStyle}>
         <CustomSearchInput
           placeholder="Digite um usuário para procurar"
           submitFunction={getGithubUserByUsername}
         />
-        {renderContentIfUserFound()}
+        <div style={styles.explainContainerStyle}>
+          <Grid item xs={12} style={styles.containerGridStyle}>
+            Essa é uma aplicação que consome a API do GitHub e mostra dados
+            sobre o usuário e seus repositórios, para saber mais sobre algum
+            usuário basta digitar seu username.
+          </Grid>
+          <Grid item xs={12} style={styles.containerGridStyle}>
+            <img
+              src={SearchPeopleIcon}
+              alt="happy icon"
+              style={styles.searchPeopleStyle}
+            />
+          </Grid>
+        </div>
       </Container>
     </>
   );
@@ -103,7 +86,7 @@ const styles = {
   explainContainerStyle: {
     marginTop: 50,
     fontWeight: 'semi-bold',
-    fontSize: 18,
+    fontSize: 19,
   },
   containerGridStyle: {
     justifyContent: 'center',

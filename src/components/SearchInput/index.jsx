@@ -46,7 +46,7 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
    */
   function handleSubmit(event) {
     if (usernameTextInput !== null) {
-      // método passado por props que realiza o GET na api do github
+      // método passado por props que retorna o nome do usuário para a home
       submitFunction(usernameTextInput);
     }
     event.preventDefault();
