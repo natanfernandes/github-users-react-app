@@ -69,7 +69,7 @@ function Search({ match }) {
 
   /**
    * componente que faz o redirect caso haja o submit do user
-   * @type {boolean}
+   * @type {JSX.Element}
    */
   function redirectToSearchPageIfHadUser() {
     if (redirectToSearchPage && usernameRouteParam) {

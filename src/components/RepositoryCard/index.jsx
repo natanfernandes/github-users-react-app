@@ -31,7 +31,6 @@ export default function RepositoryCard({ repositoryData }) {
    */
   useEffect(() => {
     setRepository(repositoryData);
-    console.log(repositoryData);
   }, [repositoryData]);
 
   /**

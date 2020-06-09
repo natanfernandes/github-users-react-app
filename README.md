@@ -1,4 +1,6 @@
-Projeto criado com template padrão do React.
+Projeto criado com template padrão do React.<br>
+
+Para rodar o projeto localmente basta clonar, entrar na pasta do projeto, executar <code>npm install</code> e após isso <code>npm start</code>
 
 ## Scripts
 
@@ -26,6 +28,10 @@ Tela mostrada após digitado um nome de usuário correto ou incorreto, com um ca
 
 Tela mostrada após clicado no card do usuário, contendo algumas infos sobre(seguidores, seguindo, data de entrada, gists, repos mais famosos) e um botão para visualizar todos os repositórios.
 
+### User Repositories ( host/user/:username/repos )
+
+Tela mostrada após clicado no botão de "Ver todos os repositorios do usuario" contendo algumas informações sobre o usuário e a listagem de todos os repositórios ordenados de forma decrescente pela quantidade de estrelas.
+
 ## Telas e Componentes
 <p>Na maioria das telas e alguns componentes customs utilizei dos componentes providos pelo <a href="https://material-ui.com/pt/"> Material UI </a> do Google, como grids para responsividade, botões, cores , dentre outros, pois ela é uma lib muito conceituada no React.
 </p>
@@ -33,12 +39,15 @@ Tela mostrada após clicado no card do usuário, contendo algumas infos sobre(se
 ## Lint
 <p>Código padronizado utilizando o <a href="https://prettier.io/docs/en/configuration.html"> Prettier </a> 
 </p>
-<p>e utilizando o ESLint com as configs do Airbnb <a href="https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb"> ESLint airbnb </a> 
+<p>e utilizando o <a href="https://eslint.org/"> ESLint </a>  com as  <a href="https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb">configs do Airbnb</a> 
 </p>
 
-## Créditos
+## Créditos dos ícones
 <div>
     Icons made by 
     <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
     <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev">Vitaly Gorbachev</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 </div>
+
+## To do
+Migrar o projeto aos poucos TypeScript para um melhor desenvolvimento, evitando erros de tipagem e compilação

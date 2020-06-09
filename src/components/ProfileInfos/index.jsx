@@ -13,17 +13,19 @@ import * as utils from '../../utils';
  */
 function ProfileInfos({ githubUser }) {
   return (
-    <>
-      <Avatar
-        src={utils.hasValidProperty(githubUser, 'avatar_url')}
-        style={styles.userImageIconSize}
-      />
-      <div style={styles.userNameStyle}>
+    <Grid container style={styles.centerAlign}>
+      <div style={styles.centerAlign}>
+        <Avatar
+          src={utils.hasValidProperty(githubUser, 'avatar_url')}
+          style={styles.userImageIconSize}
+        />
+      </div>
+      <Grid item xs={12} sm={12} style={styles.userNameStyle}>
         {utils.hasValidProperty(githubUser, 'name')}
-      </div>
-      <div style={styles.anotherInfosStyle}>
+      </Grid>
+      <Grid item xs={12} sm={12} style={styles.anotherInfosStyle}>
         {utils.hasValidProperty(githubUser, 'bio')}
-      </div>
+      </Grid>
       <Grid item xs={12} sm={12} style={styles.profileInfoWithIconContainer}>
         <EmailIcon />
         <div style={styles.anotherInfosStyle}>
@@ -60,7 +62,7 @@ function ProfileInfos({ githubUser }) {
           </div>
         </Paper>
       </Grid>
-    </>
+    </Grid>
   );
 }
 /**
@@ -121,7 +123,7 @@ const styles = {
     margin: 5,
     paddingHorizontal: 16,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   profileInfoWithIconContainerColumn: {
     alignItems: 'center',
@@ -136,6 +138,12 @@ const styles = {
     padding: 18,
     minWidth: 90,
     margin: 5,
+  },
+  centerAlign: {
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    display: 'inline-block',
   },
 };
 

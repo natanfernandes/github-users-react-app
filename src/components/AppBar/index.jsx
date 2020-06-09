@@ -40,6 +40,7 @@ export default function ButtonAppBar() {
               color="inherit"
               aria-label="menu"
               onClick={() => {
+                // redireciona para a home
                 window.location.href = '/';
               }}
             >

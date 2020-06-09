@@ -7,7 +7,7 @@ import ProfilesInfos from '../../components/ProfileInfos/index';
 import RepositoryCard from '../../components/RepositoryCard/index';
 import api from '../../api/index';
 
-function User({ match }) {
+function UserRepositories({ match }) {
   /**
    * estado que salva o retorno da requisição de GET do usuario, caso status 200
    */
@@ -58,7 +58,7 @@ function User({ match }) {
         const response = await api.get(`/users/${usernameRouteParam}/repos`);
 
         // fazendo uma cópia do array
-        let arrayOfRepos = response.data.slice();
+        const arrayOfRepos = response.data.slice();
         // ordenando por valores de stars nos repos
         arrayOfRepos.sort((repository1, repository2) => {
           const repository1Key = repository1.stargazers_count;
@@ -66,8 +66,6 @@ function User({ match }) {
           return repository2Key - repository1Key;
         });
 
-        // obtendo apenas os 4 primeiros repos com mais stars
-        arrayOfRepos = arrayOfRepos.slice(0, 4);
         setGithubUserRepos(arrayOfRepos);
       }
     } catch (error) {
@@ -108,16 +106,12 @@ function User({ match }) {
             sm={12}
             style={styles.profileInfoWithIconContainerColumn}
           >
-            <h3>Repositórios populares</h3>
-            <Button
-              variant="outlined"
-              color="default"
-              component={Link}
-              to={`/user/${usernameRouteParam}/repos`}
-            >
-              Visualizar todos os repositórios de
+            <h3>
+              Todos os
+              {` ${githubUserRepos && githubUserRepos.length} `}
+              repositórios de
               {` : ${usernameRouteParam}`}
-            </Button>
+            </h3>
           </Grid>
           <Grid container xs={12} sm={12} style={styles.popularReposContainer}>
             {githubUserRepos &&
@@ -177,7 +171,7 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
     marginTop: 20,
-    display: 'flex',
+    display: 'block',
     flexDirection: 'column',
     minHeight: 200,
   },
@@ -222,11 +216,11 @@ const styles = {
 /**
  * validação das props
  */
-User.propTypes = {
+UserRepositories.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       username: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };
-export default withRouter(User);
+export default withRouter(UserRepositories);
