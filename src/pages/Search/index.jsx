@@ -7,6 +7,8 @@ import Container from '@material-ui/core/Container';
 import { getGithubUserByUsername } from '../../api/services';
 import CustomSearchInput from '../../components/SearchInput/index';
 import UserCardImage from '../../components/UserCard/index';
+import BackdropLoading from '../../components/BackdropLoading/index';
+import SuccessSnackbar from '../../components/Snackbar/success';
 import SadIcon from '../../assets/icons/sad.svg';
 
 function Search({ match }) {
@@ -25,6 +27,11 @@ function Search({ match }) {
    * @type {boolean}
    */
   const [githubUserFound, setGithubUserFound] = useState(false);
+  /**
+   * estado que controla tela de loading enquanto a requisicao não termina
+   * @type {boolean}
+   */
+  const [waitingForUser, setWaitingForUser] = useState(false);
 
   /**
    * estado que controla se o redirecionamento deve ser feito
@@ -37,12 +44,19 @@ function Search({ match }) {
    */
   async function callApiToGetUser() {
     if (usernameRouteParam !== null) {
+      setWaitingForUser(true);
       const response = await getGithubUserByUsername(usernameRouteParam);
-      if (!response.error) {
-        setGithubUserFound(true);
-        setGithubUser(response.data);
+      if (response && response.data !== undefined) {
+        if (!response.error) {
+          setGithubUserFound(true);
+          setGithubUser(response.data);
+          setWaitingForUser(false);
+        } else {
+          setGithubUserFound(false);
+          setWaitingForUser(false);
+        }
       } else {
-        setGithubUserFound(false);
+        setWaitingForUser(false);
       }
     }
   }
@@ -111,7 +125,7 @@ function Search({ match }) {
     return (
       <div style={styles.explainContainerStyle}>
         <Grid item xs={12} style={styles.containerGridStyle}>
-          Não conseguimos encontrar um usuário com esse login!
+          Não conseguimos encontrar nenhum usuário com esse login!
         </Grid>
         <Grid item xs={12} style={styles.containerGridStyle}>
           <img src={SadIcon} alt="sad icon" style={styles.sadIconStyle} />
@@ -126,6 +140,15 @@ function Search({ match }) {
   return (
     <>
       {redirectToSearchPageIfHadUser()}
+
+      {/* componente de loading */}
+      <BackdropLoading openState={waitingForUser} />
+
+      {/* mensagem de sucesso caso user encontrado */}
+      <SuccessSnackbar
+        snackMessage="Usuário encontrado com sucesso!"
+        openState={githubUserFound}
+      />
       <CssBaseline />
       <Container maxWidth="sm" style={styles.containerStyle}>
         <CustomSearchInput

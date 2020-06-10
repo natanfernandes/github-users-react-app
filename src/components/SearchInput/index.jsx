@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/*
+ * input usado na home na search para procurar usuario
+ */
 export default function CustomSearchInput({ placeholder, submitFunction }) {
   /**
    * estado para controlar o valor digitado no input

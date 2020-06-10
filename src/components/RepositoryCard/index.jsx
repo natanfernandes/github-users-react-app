@@ -18,6 +18,10 @@ const useStyles = makeStyles({
     minWidth: 100,
   },
 });
+
+/*
+ * card com as infos de um repositorio
+ */
 export default function RepositoryCard({ repositoryData }) {
   /**
    * estado que controla os dados do user recebidos via props

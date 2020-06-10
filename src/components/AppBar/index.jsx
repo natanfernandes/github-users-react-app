@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import GitHubIcon from '@material-ui/icons/GitHub';
+import HomeIcon from '@material-ui/icons/Home';
 import Tooltip from '@material-ui/core/Tooltip';
 
 /**
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/*
+ * barra superior da app
+ */
 export default function ButtonAppBar() {
   const classes = useStyles();
   /**
@@ -44,7 +47,7 @@ export default function ButtonAppBar() {
                 window.location.href = '/';
               }}
             >
-              <GitHubIcon />
+              <HomeIcon />
             </IconButton>
           </Tooltip>
         </Toolbar>

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import { Link, withRouter } from 'react-router-dom';
 import ProfilesInfos from '../../components/ProfileInfos/index';
 import RepositoryCard from '../../components/RepositoryCard/index';
+import BackdropLoading from '../../components/BackdropLoading/index';
 import {
   getGithubUserByUsername,
   getGithubUserRepositoriesByUsername,
@@ -22,27 +23,49 @@ function User({ match }) {
   const [githubUserRepos, setGithubUserRepos] = useState(null);
 
   /**
-   * estado que salva o retorno da requisição de GET do usuario, caso status 200
+   * estado que salva o username vindo path
+   * @type {string}
    */
   const [usernameRouteParam, setUsernameRouteParam] = useState(null);
 
   /**
-   * estado que salva se o usuário foi encontrado ou não
+   * estado que controla tela de loading enquanto a requisicao não termina
    * @type {boolean}
    */
-  const [githubUserFound, setGithubUserFound] = useState(false);
+  const [waitingForUser, setWaitingForUser] = useState(true);
+  /**
+   * estado que controla tela de loading enquanto a requisicao não termina
+   * @type {boolean}
+   */
+  const [waitingForRepos, setWaitingForRepos] = useState(true);
+  /**
+   * estado que controla tela de loading enquanto a requisicao não termina
+   * @type {boolean}
+   */
+  const [waitingForUserAndRepos, setWaitingForUserAndRepos] = useState(true);
 
   /**
    * método que chama o método do service para obter o user
    */
   async function callApiToGetUser() {
     if (usernameRouteParam !== null) {
+      // controlando o loading
+      setWaitingForUser(true);
+
       const response = await getGithubUserByUsername(usernameRouteParam);
-      if (!response.error) {
-        setGithubUserFound(true);
-        setGithubUser(response.data);
+      if (response && response.data !== undefined) {
+        if (!response.error) {
+          // controlando o loading
+          setWaitingForUser(false);
+
+          setGithubUser(response.data);
+        } else {
+          // controlando o loading
+          setWaitingForUser(false);
+        }
       } else {
-        setGithubUserFound(false);
+        // controlando o loading
+        setWaitingForUser(false);
       }
     }
   }
@@ -51,24 +74,45 @@ function User({ match }) {
    */
   async function callApiToGetUserRepositories() {
     if (usernameRouteParam !== null) {
+      // controlando o loading do user e repositório
+      setWaitingForRepos(true);
+
       const response = await getGithubUserRepositoriesByUsername(
         usernameRouteParam
       );
-      if (!response.error) {
-        // fazendo uma cópia do array
-        let arrayOfRepos = response.data.slice();
-        // ordenando por valores de stars nos repos
-        arrayOfRepos.sort((repository1, repository2) => {
-          const repository1Key = repository1.stargazers_count;
-          const repository2Key = repository2.stargazers_count;
-          return repository2Key - repository1Key;
-        });
-        // obtendo apenas os 4 primeiros repos com mais stars
-        arrayOfRepos = arrayOfRepos.slice(0, 4);
-        setGithubUserRepos(arrayOfRepos);
+      if (response && response.data !== undefined) {
+        if (!response.error) {
+          // controlando o loading
+          setWaitingForRepos(false);
+
+          // fazendo uma cópia do array
+          let arrayOfRepos = response.data.slice();
+          // ordenando por valores de stars nos repos
+          arrayOfRepos.sort((repository1, repository2) => {
+            const repository1Key = repository1.stargazers_count;
+            const repository2Key = repository2.stargazers_count;
+            return repository2Key - repository1Key;
+          });
+          // obtendo apenas os 4 primeiros repos com mais stars
+          arrayOfRepos = arrayOfRepos.slice(0, 4);
+          setGithubUserRepos(arrayOfRepos);
+        }
       }
+      // controlando o loading
+      setWaitingForRepos(false);
     }
   }
+
+  /**
+   * hook de efeito que controla o loading do user e dos repositorios
+   */
+  useEffect(() => {
+    if (!waitingForUser && !waitingForRepos) {
+      setWaitingForUserAndRepos(false);
+    } else {
+      setWaitingForUserAndRepos(true);
+    }
+  }, [waitingForUser, waitingForRepos]);
 
   /**
    * hook de efeito de estado que é executado quando essa page é montada,
@@ -92,6 +136,9 @@ function User({ match }) {
 
   return (
     <div style={{ flexGrow: 1 }}>
+      {/* componente de loading */}
+      <BackdropLoading openState={waitingForUserAndRepos} />
+
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4} style={styles.containerGridStyle}>
           <ProfilesInfos githubUser={githubUser} />

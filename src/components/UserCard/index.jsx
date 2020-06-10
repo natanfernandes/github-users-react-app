@@ -19,7 +19,9 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
 });
-
+/*
+ * Card com as infos do user qnd achado
+ */
 export default function UserCardImage({ userData }) {
   /**
    * estado que controla os dados do user recebidos via props
