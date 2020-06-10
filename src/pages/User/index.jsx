@@ -5,7 +5,10 @@ import Button from '@material-ui/core/Button';
 import { Link, withRouter } from 'react-router-dom';
 import ProfilesInfos from '../../components/ProfileInfos/index';
 import RepositoryCard from '../../components/RepositoryCard/index';
-import api from '../../api/index';
+import {
+  getGithubUserByUsername,
+  getGithubUserRepositoriesByUsername,
+} from '../../api/services';
 
 function User({ match }) {
   /**
@@ -30,33 +33,28 @@ function User({ match }) {
   const [githubUserFound, setGithubUserFound] = useState(false);
 
   /**
-   * método que faz a requisição GET de acordo com o login do user
-   * caso status 200 salva os dados do user e seta como true a variavel de estado que controla se o user foi encontrado
-   * caso 404 seta como false a variavel que controla se o user foi achado, mostrando msg de erro
+   * método que chama o método do service para obter o user
    */
-  async function getGithubUserByUsername() {
-    try {
-      if (usernameRouteParam !== null) {
-        const response = await api.get(`/users/${usernameRouteParam}`);
+  async function callApiToGetUser() {
+    if (usernameRouteParam !== null) {
+      const response = await getGithubUserByUsername(usernameRouteParam);
+      if (!response.error) {
         setGithubUserFound(true);
         setGithubUser(response.data);
-        console.log(response);
+      } else {
+        setGithubUserFound(false);
       }
-    } catch (error) {
-      setGithubUserFound(false);
     }
   }
-
   /**
-   * método que faz a requisição GET de todos repositorios de um user pelo login
-   * caso status 200 pega os 4 repos mais famosos por stars
-   * caso erro, mostra msg de erro
+   * método que chama o método do service para obter os repositórios user
    */
-  async function getGithubUserReposByUsername() {
-    try {
-      if (usernameRouteParam !== null) {
-        const response = await api.get(`/users/${usernameRouteParam}/repos`);
-
+  async function callApiToGetUserRepositories() {
+    if (usernameRouteParam !== null) {
+      const response = await getGithubUserRepositoriesByUsername(
+        usernameRouteParam
+      );
+      if (!response.error) {
         // fazendo uma cópia do array
         let arrayOfRepos = response.data.slice();
         // ordenando por valores de stars nos repos
@@ -65,13 +63,10 @@ function User({ match }) {
           const repository2Key = repository2.stargazers_count;
           return repository2Key - repository1Key;
         });
-
         // obtendo apenas os 4 primeiros repos com mais stars
         arrayOfRepos = arrayOfRepos.slice(0, 4);
         setGithubUserRepos(arrayOfRepos);
       }
-    } catch (error) {
-      alert(error);
     }
   }
 
@@ -82,8 +77,8 @@ function User({ match }) {
   useEffect(() => {
     const { username } = match.params;
     setUsernameRouteParam(username);
-    getGithubUserByUsername();
-    getGithubUserReposByUsername();
+    callApiToGetUser();
+    callApiToGetUserRepositories();
   }, []);
 
   /**
@@ -91,8 +86,8 @@ function User({ match }) {
    * @param {string} usernameRouteParam - username do usuário que vem pela rota
    */
   useEffect(() => {
-    getGithubUserByUsername();
-    getGithubUserReposByUsername();
+    callApiToGetUser();
+    callApiToGetUserRepositories();
   }, [usernameRouteParam]);
 
   return (

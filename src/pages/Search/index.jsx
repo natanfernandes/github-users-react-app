@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import api from '../../api/index';
+import { getGithubUserByUsername } from '../../api/services';
 import CustomSearchInput from '../../components/SearchInput/index';
 import UserCardImage from '../../components/UserCard/index';
 import SadIcon from '../../assets/icons/sad.svg';
@@ -33,19 +33,17 @@ function Search({ match }) {
   const [redirectToSearchPage, setRedirectToSearchPage] = useState(false);
 
   /**
-   * método que faz a requisição GET de acordo com o login do user
-   * caso status 200 salva os dados do user e seta como true a variavel de estado que controla se o user foi encontrado
-   * caso 404 seta como false a variavel que controla se o user foi achado, mostrando msg de erro
+   * método que chama o método do service para obter o user
    */
-  async function getGithubUserByUsername() {
-    try {
-      if (usernameRouteParam !== null) {
-        const response = await api.get(`/users/${usernameRouteParam}`);
+  async function callApiToGetUser() {
+    if (usernameRouteParam !== null) {
+      const response = await getGithubUserByUsername(usernameRouteParam);
+      if (!response.error) {
         setGithubUserFound(true);
         setGithubUser(response.data);
+      } else {
+        setGithubUserFound(false);
       }
-    } catch (error) {
-      setGithubUserFound(false);
     }
   }
 
@@ -56,7 +54,7 @@ function Search({ match }) {
   useEffect(() => {
     const { username } = match.params;
     setUsernameRouteParam(username);
-    getGithubUserByUsername();
+    callApiToGetUser();
   }, []);
 
   /**
@@ -64,7 +62,7 @@ function Search({ match }) {
    * @param {string} usernameRouteParam - username do usuário que vem pela rota
    */
   useEffect(() => {
-    getGithubUserByUsername();
+    callApiToGetUser();
   }, [usernameRouteParam]);
 
   /**
