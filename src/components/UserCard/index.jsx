@@ -17,6 +17,7 @@ import * as utils from '../../utils';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    textDecoration: 'none',
   },
 });
 /*
@@ -41,7 +42,11 @@ export default function UserCardImage({ userData }) {
    * principal componente a ser renderizado (UserCardImage)
    */
   return (
-    <Card className={classes.root}>
+    <Card
+      className={classes.root}
+      component={Link}
+      to={`/user/${utils.hasValidProperty(user, 'login')}`}
+    >
       <CardActionArea>
         <CardMedia
           component="img"

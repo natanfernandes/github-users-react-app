@@ -179,18 +179,18 @@ function User({ match }) {
               to={`/user/${usernameRouteParam}/repos`}
             >
               Visualizar todos os repositórios de
-              {` : ${usernameRouteParam}`}
+              {` ${usernameRouteParam}`}
             </Button>
           </Grid>
-          <Grid container xs={12} sm={12} style={styles.popularReposContainer}>
+          <Grid
+            container
+            xs={12}
+            sm={12}
+            style={styles.profileInfoWithIconContainerColumn}
+          >
             {githubUserRepos &&
               githubUserRepos.map((repo) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  style={styles.profileInfoWithIconContainerColumn}
-                >
+                <Grid item xs={12} sm={6} style={styles.popularRepository}>
                   <RepositoryCard repositoryData={repo} />
                 </Grid>
               ))}
