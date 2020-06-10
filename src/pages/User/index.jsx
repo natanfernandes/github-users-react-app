@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import ProfilesInfos from '../../components/ProfileInfos/index';
 import RepositoryCard from '../../components/RepositoryCard/index';
 import BackdropLoading from '../../components/BackdropLoading/index';
@@ -45,6 +45,12 @@ function User({ match }) {
   const [waitingForUserAndRepos, setWaitingForUserAndRepos] = useState(true);
 
   /**
+   * estado que controla se teve algum erro na requisicao de usuario
+   * @type {boolean}
+   */
+  const [userRequisitionError, setUserRequisitionError] = useState(false);
+
+  /**
    * método que chama o método do service para obter o user
    */
   async function callApiToGetUser() {
@@ -62,6 +68,8 @@ function User({ match }) {
         } else {
           // controlando o loading
           setWaitingForUser(false);
+
+          setUserRequisitionError(true);
         }
       } else {
         // controlando o loading
@@ -134,10 +142,23 @@ function User({ match }) {
     callApiToGetUserRepositories();
   }, [usernameRouteParam]);
 
+  /**
+   * componente que faz o redirect caso user seja inválido
+   * @type {JSX.Element}
+   */
+  function redirectToNotFounderUserIfInvalidUser() {
+    if (userRequisitionError) {
+      return <Redirect to={`/search/${usernameRouteParam}`} />;
+    }
+    return null;
+  }
+
   return (
     <div style={{ flexGrow: 1 }}>
       {/* componente de loading */}
       <BackdropLoading openState={waitingForUserAndRepos} />
+
+      {redirectToNotFounderUserIfInvalidUser()}
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4} style={styles.containerGridStyle}>

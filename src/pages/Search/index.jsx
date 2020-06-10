@@ -154,6 +154,7 @@ function Search({ match }) {
         <CustomSearchInput
           placeholder="Digite um usuário para procurar"
           submitFunction={getUsernameAndRedirect}
+          stateValue={usernameRouteParam}
         />
         {renderContentIfUserFound()}
       </Container>

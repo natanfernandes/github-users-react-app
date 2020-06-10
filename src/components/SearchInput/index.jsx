@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -34,12 +34,19 @@ const useStyles = makeStyles((theme) => ({
 /*
  * input usado na home na search para procurar usuario
  */
-export default function CustomSearchInput({ placeholder, submitFunction }) {
+export default function CustomSearchInput({
+  placeholder,
+  submitFunction,
+  stateValue,
+}) {
   /**
    * estado para controlar o valor digitado no input
    */
-
   const [usernameTextInput, setUsernameTextInput] = useState(null);
+
+  useEffect(() => {
+    setUsernameTextInput(stateValue);
+  }, [stateValue]);
 
   const classes = useStyles();
 
@@ -61,6 +68,7 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
       <Divider className={classes.divider} orientation="vertical" />
       <InputBase
         className={classes.input}
+        value={usernameTextInput}
         placeholder={placeholder}
         onChange={(text) => setUsernameTextInput(text.target.value)}
       />
@@ -81,4 +89,5 @@ export default function CustomSearchInput({ placeholder, submitFunction }) {
 CustomSearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   submitFunction: PropTypes.func.isRequired,
+  stateValue: PropTypes.string.isRequired,
 };

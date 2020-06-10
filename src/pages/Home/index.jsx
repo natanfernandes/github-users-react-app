@@ -49,6 +49,7 @@ function Home() {
         <CustomSearchInput
           placeholder="Digite um usuário para procurar"
           submitFunction={getGithubUserByUsername}
+          stateValue={githubUser}
         />
         <div style={styles.explainContainerStyle}>
           <Grid item xs={12} style={styles.containerGridStyle}>
