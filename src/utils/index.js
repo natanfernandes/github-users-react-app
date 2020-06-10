@@ -5,7 +5,7 @@ export function hasValidProperty(object, property) {
   if (object && object[property]) {
     return object[property];
   }
-  return null;
+  return 'Não informado';
 }
 
 /**
