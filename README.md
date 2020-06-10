@@ -1,8 +1,13 @@
 Projeto criado com template padrão do React.<br>
 
+## Rodar o projeto localmente
 Para rodar o projeto localmente basta clonar, entrar na pasta do projeto, executar <code>npm install</code> e após isso <code>npm start</code>
 
 ## Scripts
+
+### `npm install`
+
+Instala todas as dependências necessárias na pasta node_modules local.
 
 ### `npm start`
 
@@ -41,6 +46,17 @@ Tela mostrada após clicado no botão de "Ver todos os repositorios do usuario" 
 *   pages - as páginas principais da aplicação, construída com ajuda dos components
 *   routes - arquivo com as rotas da aplicação, redirecionando e renderizando os componentes de acordo com a rota
 *   utils - arquivo com utilitários/utilidades muito utilizadas
+
+## Fluxo de uso 
+
+### O fluxo de uso pensado para a aplicação foi o seguinte:
+
+1  -  O usuário abre a página inicial e digita um user do github e é redirecionado para página de search
+2  -  Na página de search, é mostrado se o usuário foi encontrado ou não, se não foi encontrado mostra uma mensagem de erro e permite buscar outro usuário, e se foi econtrado mostra um card com o usuário e basta clicar para ser redirecionado para seu perfil
+3  -  No perfil do usuário é possível ver algumas informações sobre ele na esquerda, e na direita seus repositórios mais famosos e um botão para ver todos os repositórios, ao clicar no botão é redirecionado para a página de repositórios do usuário
+4  -  Na tela de repositórios é possível visualizar todos os repositórios do usuário ordenados de forma decrescente
+
+*  obs : é possível voltar para a tela inicial clicando no ícone home na barra superior
 
 ## Telas e Componentes
 <p>Na maioria das telas e alguns componentes customs utilizei dos componentes providos pelo <a href="https://material-ui.com/pt/"> Material UI </a> do Google, como grids para responsividade, botões, cores , dentre outros, pois ela é uma lib muito conceituada no React.
