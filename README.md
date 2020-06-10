@@ -32,6 +32,16 @@ Tela mostrada após clicado no card do usuário, contendo algumas infos sobre(se
 
 Tela mostrada após clicado no botão de "Ver todos os repositorios do usuario" contendo algumas informações sobre o usuário e a listagem de todos os repositórios ordenados de forma decrescente pela quantidade de estrelas.
 
+## Estrutura do projeto
+*   api 
+    *   index - cria arquivo que cria a instancia do axios
+    *   services - chamadas a api do GitHub que são utilizadas nos components e pages
+*   assets - guarda todas imagens, icones, fontes usados no projeto
+*   components - guarda todos os componentes reusáveis ou componentes muito complexos e grandes usados pelas pages
+*   pages - as páginas principais da aplicação, construída com ajuda dos components
+*   routes - arquivo com as rotas da aplicação, redirecionando e renderizando os componentes de acordo com a rota
+*   utils - arquivo com utilitários/utilidades muito utilizadas
+
 ## Telas e Componentes
 <p>Na maioria das telas e alguns componentes customs utilizei dos componentes providos pelo <a href="https://material-ui.com/pt/"> Material UI </a> do Google, como grids para responsividade, botões, cores , dentre outros, pois ela é uma lib muito conceituada no React.
 </p>
