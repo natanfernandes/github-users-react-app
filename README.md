@@ -51,10 +51,10 @@ Tela mostrada após clicado no botão de "Ver todos os repositorios do usuario" 
 
 ### O fluxo de uso pensado para a aplicação foi o seguinte:
 
-1  -  O usuário abre a página inicial e digita um user do github e é redirecionado para página de search
-2  -  Na página de search, é mostrado se o usuário foi encontrado ou não, se não foi encontrado mostra uma mensagem de erro e permite buscar outro usuário, e se foi econtrado mostra um card com o usuário e basta clicar para ser redirecionado para seu perfil
-3  -  No perfil do usuário é possível ver algumas informações sobre ele na esquerda, e na direita seus repositórios mais famosos e um botão para ver todos os repositórios, ao clicar no botão é redirecionado para a página de repositórios do usuário
-4  -  Na tela de repositórios é possível visualizar todos os repositórios do usuário ordenados de forma decrescente
+1  -  O usuário abre a página inicial e digita um user do github e é redirecionado para página de search<br>
+2  -  Na página de search, é mostrado se o usuário foi encontrado ou não, se não foi encontrado mostra uma mensagem de erro e permite buscar outro usuário, e se foi econtrado mostra um card com o usuário e basta clicar para ser redirecionado para seu perfil<br>
+3  -  No perfil do usuário é possível ver algumas informações sobre ele na esquerda, e na direita seus repositórios mais famosos e um botão para ver todos os repositórios, ao clicar no botão é redirecionado para a página de repositórios do usuário<br>
+4  -  Na tela de repositórios é possível visualizar todos os repositórios do usuário ordenados de forma decrescente<br>
 
 *  obs : é possível voltar para a tela inicial clicando no ícone home na barra superior
 

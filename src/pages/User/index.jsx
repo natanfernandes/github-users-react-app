@@ -182,15 +182,15 @@ function User({ match }) {
               {` ${usernameRouteParam}`}
             </Button>
           </Grid>
-          <Grid
-            container
-            xs={12}
-            sm={12}
-            style={styles.profileInfoWithIconContainerColumn}
-          >
+          <Grid container xs={12} sm={12} style={styles.popularReposContainer}>
             {githubUserRepos &&
               githubUserRepos.map((repo) => (
-                <Grid item xs={12} sm={6} style={styles.popularRepository}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  style={styles.profileInfoWithIconContainerColumn}
+                >
                   <RepositoryCard repositoryData={repo} />
                 </Grid>
               ))}

@@ -38,6 +38,8 @@ export default function CustomSearchInput({
   placeholder,
   submitFunction,
   stateValue,
+  onChangeFunction,
+  iconLeft,
 }) {
   /**
    * estado para controlar o valor digitado no input
@@ -64,13 +66,18 @@ export default function CustomSearchInput({
 
   return (
     <Paper component="form" className={classes.root} onSubmit={handleSubmit}>
-      <PersonIcon />
+      {iconLeft || <PersonIcon />}
       <Divider className={classes.divider} orientation="vertical" />
       <InputBase
         className={classes.input}
         value={usernameTextInput}
         placeholder={placeholder}
-        onChange={(text) => setUsernameTextInput(text.target.value)}
+        onChange={(text) => {
+          setUsernameTextInput(text.target.value);
+          if (onChangeFunction !== undefined) {
+            onChangeFunction(text.target.value);
+          }
+        }}
       />
       <IconButton
         type="submit"
@@ -89,5 +96,7 @@ export default function CustomSearchInput({
 CustomSearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   submitFunction: PropTypes.func.isRequired,
+  onChangeFunction: PropTypes.func.isRequired,
   stateValue: PropTypes.string.isRequired,
+  iconLeft: PropTypes.element.isRequired,
 };

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
+import BookIcon from '@material-ui/icons/Book';
 import { Redirect, withRouter } from 'react-router-dom';
 import ProfilesInfos from '../../components/ProfileInfos/index';
 import RepositoryCard from '../../components/RepositoryCard/index';
 import BackdropLoading from '../../components/BackdropLoading/index';
+import SearchInput from '../../components/SearchInput/index';
 import {
   getGithubUserByUsername,
   getGithubUserRepositoriesByUsername,
@@ -20,6 +22,17 @@ function UserRepositories({ match }) {
    * estado que salva o retorno da requisição de GET dos repos do usuario, caso status 200
    */
   const [githubUserRepos, setGithubUserRepos] = useState(null);
+
+  /**
+   * array auxiliar que guarda os repositórios que são buscados no input
+   */
+  const [githubUserReposSearch, setGithubUserReposSearch] = useState(null);
+
+  /**
+   * valor digitado no input de procurar por repositorio
+   * @type {string}
+   */
+  const [repoNameToSearch, setRepoNameToSearch] = useState(null);
 
   /**
    * estado que salva o username vindo path
@@ -101,6 +114,7 @@ function UserRepositories({ match }) {
           });
 
           setGithubUserRepos(arrayOfRepos);
+          setGithubUserReposSearch(arrayOfRepos);
         } else {
           // controlando o loading
           setWaitingForRepos(false);
@@ -154,6 +168,29 @@ function UserRepositories({ match }) {
     return null;
   }
 
+  /**
+   * método que captura o onchange do input e faz a busca dos repositórios no array
+   * @param {string} text - texto digitado no input
+   */
+  function onChangeInputRepoText(text) {
+    setRepoNameToSearch(text);
+    const arrayToSaveFindRepos = [];
+
+    githubUserRepos.find((repo) => {
+      setGithubUserReposSearch(null);
+      if (repo.name.startsWith(text)) {
+        arrayToSaveFindRepos.push(repo);
+      }
+      return null;
+    });
+
+    if (arrayToSaveFindRepos.length > 0) {
+      setGithubUserReposSearch(arrayToSaveFindRepos);
+    } else {
+      setGithubUserReposSearch(githubUserRepos);
+    }
+  }
+
   return (
     <div style={{ flexGrow: 1 }}>
       {/* componente de loading */}
@@ -180,8 +217,21 @@ function UserRepositories({ match }) {
             </h3>
           </Grid>
           <Grid container xs={12} sm={12} style={styles.popularReposContainer}>
-            {githubUserRepos &&
-              githubUserRepos.map((repo) => (
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              style={styles.profileInfoWithIconContainerColumn}
+            >
+              <SearchInput
+                placeholder="Caso queira procurar um repositório específico, digite aqui"
+                onChangeFunction={onChangeInputRepoText}
+                iconLeft={<BookIcon />}
+              />
+              <p>{repoNameToSearch}</p>
+            </Grid>
+            {githubUserReposSearch &&
+              githubUserReposSearch.map((repo) => (
                 <Grid
                   item
                   xs={12}
